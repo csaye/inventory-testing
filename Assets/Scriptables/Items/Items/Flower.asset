@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Flower
   m_EditorClassIdentifier: 
   itemID: item_flower
+  maxStack: 9
+  itemIcon: {fileID: 21300000, guid: 565594dfcf776483885a7ce3c3c4f872, type: 3}

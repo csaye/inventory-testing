@@ -5,4 +5,5 @@ public class ItemScriptable : ScriptableObject
 {
     public string itemID;
     public float maxStack;
+    public Sprite itemIcon;
 }

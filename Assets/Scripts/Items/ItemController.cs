@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemController : MonoBehaviour
 {
     public ItemScriptable itemScriptable;
+    public InventorySystem inventorySystem;
     
     void OnTriggerEnter2D(Collider2D collider)
     {
@@ -12,21 +13,25 @@ public class ItemController : MonoBehaviour
         {
             List<InventorySlotType> inventory = InventorySystem.inventory;
 
-            for (int i = 0; i < inventory.Count - 1; i++)
+            for (int i = 0; i < inventory.Count; i++)
             {
                 // If available slot in inventory
                 if (inventory[i].itemCount == 0)
                 {
                     inventory[i].itemID = itemScriptable.itemID;
                     inventory[i].itemCount++;
-                    InventorySystem.UpdateInventory();
+                    InventorySystem.inventory = inventory;
+                    inventorySystem.UpdateInventory();
                     Destroy(gameObject);
+                    break;
                 }
                 else if (inventory[i].itemID == itemScriptable.itemID && inventory[i].itemCount < itemScriptable.maxStack)
                 {
                     inventory[i].itemCount++;
-                    InventorySystem.UpdateInventory();
+                    InventorySystem.inventory = inventory;
+                    inventorySystem.UpdateInventory();
                     Destroy(gameObject);
+                    break;
                 }
             }
         }
