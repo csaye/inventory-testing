@@ -22,7 +22,7 @@ public class ItemController : MonoBehaviour
                     inventory[i].itemID = itemScriptable.itemID;
                     inventory[i].itemCount++;
                     InventorySystem.inventory = inventory;
-                    inventorySystem.UpdateInventory();
+                    inventorySystem.UpdateInventory(gameObject);
                     Destroy(gameObject);
                     break;
                 }
@@ -30,7 +30,7 @@ public class ItemController : MonoBehaviour
                 {
                     inventory[i].itemCount++;
                     InventorySystem.inventory = inventory;
-                    inventorySystem.UpdateInventory();
+                    inventorySystem.UpdateInventory(gameObject);
                     Destroy(gameObject);
                     break;
                 }

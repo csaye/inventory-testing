@@ -22,7 +22,6 @@ public class InventorySystem : MonoBehaviour
     [Header("References")]
     public CanvasGroup inventoryPopup;
     public List<GameObject> inventorySlots;
-    public List<ItemIconType> itemIcons;
 
     private bool inventoryEnabled = false;
 
@@ -40,13 +39,13 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public void UpdateInventory()
+    public void UpdateInventory(GameObject obj)
     {
         for (int i = 0; i < inventorySlots.Count; i++)
         {
             if (inventory[i].itemID != null)
             {
-                inventorySlots[i].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = GetIcon(inventory[i].itemID);
+                inventorySlots[i].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = obj.GetComponent<SpriteRenderer>().sprite;
             }
             if (inventory[i].itemCount > 1)
             {
@@ -55,19 +54,6 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    // Gets item icon from item ID
-    private Sprite GetIcon(string itemID)
-    {
-        for (int i = 0; i < itemIcons.Count; i++)
-        {
-            if (itemIcons[i].itemID == itemID)
-            {
-                return itemIcons[i].itemIcon;
-            }
-        }
-        return null;
-    }
-    
     private void UpdateInventoryEnabled()
     {
         inventoryPopup.interactable = inventoryEnabled;
