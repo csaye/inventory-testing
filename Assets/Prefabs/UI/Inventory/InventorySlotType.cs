@@ -6,5 +6,4 @@ public class InventorySlotType
 {
     public string itemID;
     public float itemCount;
-    public bool empty;
 }

@@ -8,13 +8,20 @@ public class ItemController : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("Player"))
         {
+            List<InventorySlotType> inventory = InventorySystem.inventory;
+
             for (int i = 0; i < inventory.Count - 1; i++)
             {
                 // If available slot in inventory
-                if (inventory[i])
+                if (inventory[i].itemCount == 0)
                 {
+                    // inventory[i].
                     Destroy(gameObject);
                 }
+                // else if (inventory[i].itemID == )
+                // {
+                //     Destroy(gameObject);
+                // }
             }
         }
     }
