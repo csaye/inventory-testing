@@ -8,6 +8,7 @@ public class InventorySystem : MonoBehaviour
 
     [Header("References")]
     public CanvasGroup inventoryPopup;
+    public List<GameObject> inventorySlots;
 
     private bool inventoryEnabled = false;
 
@@ -24,8 +25,13 @@ public class InventorySystem : MonoBehaviour
             UpdateInventoryEnabled();
         }
     }
+
+    public static void UpdateInventory()
+    {
+
+    }
     
-    void UpdateInventoryEnabled()
+    private void UpdateInventoryEnabled()
     {
         inventoryPopup.interactable = inventoryEnabled;
         inventoryPopup.blocksRaycasts = inventoryEnabled;
