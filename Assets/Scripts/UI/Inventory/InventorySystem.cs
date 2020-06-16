@@ -21,13 +21,22 @@ public class InventorySystem : MonoBehaviour
 
     [Header("References")]
     public CanvasGroup inventoryPopup;
+    public List<InventorySlotType> customInventory = new List<InventorySlotType>();
     public List<GameObject> inventorySlots;
+
+    [Header("Item Icons")]
+    public List<ItemIconType> itemIcons;
 
     private bool inventoryEnabled = false;
 
     void Start()
     {
+        for (int i = 0; i < customInventory.Count; i++)
+        {
+            inventory[i] = customInventory[i];
+        }
         UpdateInventoryEnabled();
+        UpdateInventory();
     }
 
     void Update()
@@ -39,19 +48,32 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public void UpdateInventory(GameObject obj)
+    public void UpdateInventory()
     {
         for (int i = 0; i < inventorySlots.Count; i++)
         {
             if (inventory[i].itemID != null)
             {
-                inventorySlots[i].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = obj.GetComponent<SpriteRenderer>().sprite;
+                inventorySlots[i].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = GetIcon(inventory[i].itemID);
             }
             if (inventory[i].itemCount > 1)
             {
                 inventorySlots[i].transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = inventory[i].itemCount.ToString();
             }
         }
+    }
+
+    private Sprite GetIcon(string itemID)
+    {
+        for (int i = 0; i < itemIcons.Count; i++)
+        {
+            if (itemIcons[i].itemID == itemID)
+            {
+                return itemIcons[i].itemIcon;
+            }
+        }
+
+        return null;
     }
 
     private void UpdateInventoryEnabled()

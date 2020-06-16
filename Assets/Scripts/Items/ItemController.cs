@@ -6,7 +6,16 @@ public class ItemController : MonoBehaviour
 {
     [Header("References")]
     public ItemScriptable itemScriptable;
-    public InventorySystem inventorySystem;
+    
+    private InventorySystem inventorySystem;
+
+    void Awake()
+    {
+        if (inventorySystem == null)
+        {
+            inventorySystem = FindObjectOfType<InventorySystem>();
+        }
+    }
     
     void OnTriggerEnter2D(Collider2D collider)
     {
@@ -22,7 +31,7 @@ public class ItemController : MonoBehaviour
                     inventory[i].itemID = itemScriptable.itemID;
                     inventory[i].itemCount++;
                     InventorySystem.inventory = inventory;
-                    inventorySystem.UpdateInventory(gameObject);
+                    inventorySystem.UpdateInventory();
                     Destroy(gameObject);
                     break;
                 }
@@ -30,7 +39,7 @@ public class ItemController : MonoBehaviour
                 {
                     inventory[i].itemCount++;
                     InventorySystem.inventory = inventory;
-                    inventorySystem.UpdateInventory(gameObject);
+                    inventorySystem.UpdateInventory();
                     Destroy(gameObject);
                     break;
                 }

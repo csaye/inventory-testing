@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[System.Serializable]
 public class InventorySlotType
 {
     public string itemID;
