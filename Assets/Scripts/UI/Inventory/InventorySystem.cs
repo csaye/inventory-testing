@@ -4,25 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class InventorySystem : MonoBehaviour
-{
+{   
     public static List<InventorySlotType> inventory = new List<InventorySlotType>
     {
-        new InventorySlotType("", 0),
-        new InventorySlotType("", 0),
-        new InventorySlotType("", 0),
-        new InventorySlotType("", 0),
-        new InventorySlotType("", 0),
-        new InventorySlotType("", 0),
-        new InventorySlotType("", 0),
-        new InventorySlotType("", 0),
-        new InventorySlotType("", 0),
-        new InventorySlotType("", 0)
+        new InventorySlotType(null, 0),
+        new InventorySlotType(null, 0),
+        new InventorySlotType(null, 0),
+        new InventorySlotType(null, 0),
+        new InventorySlotType(null, 0),
+        new InventorySlotType(null, 0),
+        new InventorySlotType(null, 0),
+        new InventorySlotType(null, 0),
+        new InventorySlotType(null, 0),
+        new InventorySlotType(null, 0)
     };
 
     [Header("References")]
     public CanvasGroup inventoryPopup;
     public List<GameObject> inventorySlots;
-    public Sprite flowerIcon;
+    public List<ItemIconType> itemIcons;
 
     private bool inventoryEnabled = false;
 
@@ -55,13 +55,17 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
+    // Gets item icon from item ID
     private Sprite GetIcon(string itemID)
     {
-        switch (itemID)
+        for (int i = 0; i < itemIcons.Count; i++)
         {
-            case "item_flower": return flowerIcon;
-            default: return null;
+            if (itemIcons[i].itemID == itemID)
+            {
+                return itemIcons[i].itemIcon;
+            }
         }
+        return null;
     }
     
     private void UpdateInventoryEnabled()

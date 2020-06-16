@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemController : MonoBehaviour
 {
+    [Header("References")]
     public ItemScriptable itemScriptable;
     public InventorySystem inventorySystem;
     
