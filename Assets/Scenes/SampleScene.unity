@@ -6041,13 +6041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryPopup: {fileID: 1998440499}
-  customInventory:
-  - itemID: item_flower
-    itemCount: 1
-  - itemID: item_flower
-    itemCount: 30
-  - itemID: item_flower
-    itemCount: 77
+  customInventory: []
   inventorySlots:
   - {fileID: 1078647522}
   - {fileID: 928234533}
@@ -6059,9 +6053,6 @@ MonoBehaviour:
   - {fileID: 306877849}
   - {fileID: 389118135}
   - {fileID: 2054274275}
-  itemIcons:
-  - itemID: item_flower
-    itemIcon: {fileID: 21300000, guid: 565594dfcf776483885a7ce3c3c4f872, type: 3}
 --- !u!1001 &2104388635
 PrefabInstance:
   m_ObjectHideFlags: 0

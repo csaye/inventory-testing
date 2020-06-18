@@ -24,9 +24,6 @@ public class InventorySystem : MonoBehaviour
     public List<InventorySlotType> customInventory = new List<InventorySlotType>();
     public List<GameObject> inventorySlots;
 
-    [Header("Item Icons")]
-    public List<ItemIconType> itemIcons;
-
     private bool inventoryEnabled = false;
 
     void Start()
@@ -65,15 +62,7 @@ public class InventorySystem : MonoBehaviour
 
     private Sprite GetIcon(string itemID)
     {
-        for (int i = 0; i < itemIcons.Count; i++)
-        {
-            if (itemIcons[i].itemID == itemID)
-            {
-                return itemIcons[i].itemIcon;
-            }
-        }
-
-        return null;
+        return Resources.Load<Sprite>("Items/" + itemID);
     }
 
     private void UpdateInventoryEnabled()
