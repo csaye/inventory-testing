@@ -55,7 +55,7 @@ namespace Spellsplit
             {
                 if (inventory[i].itemID != null)
                 {
-                    GetIcon(inventory[i].itemID);
+                    SetIcon(inventory[i].itemID, i);
                 }
                 if (inventory[i].itemCount > 1)
                 {
@@ -64,28 +64,14 @@ namespace Spellsplit
             }
         }
 
-        private void GetIcon(string itemID)
+        private void SetIcon(string itemID, int index)
         {
-            // return Resources.Load<Sprite>("Items/" + itemID);
-            // return Addressables.LoadAssetAsync<Sprite>(itemID);
+            AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(itemID);
 
-            // AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(itemID);
-
-            // if (handle.Status == AsyncOperationStatus.Succeeded)
-            // {
-            //     return handle.Result;
-            // }
-
-            // handle.Completed += OnLoadDone;
-
-            Addressables.LoadAssetAsync<Sprite>(itemID).Completed += OnLoadDone;
-
-            // return Addressables.LoadAssetAsync<Sprite>(itemID).Result;
-        }
-        
-        private void OnLoadDone(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<Sprite> handle)
-        {
-            inventorySlots[0].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = handle.Result;
+            handle.Completed += ctx =>
+            {
+                inventorySlots[index].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = handle.Result;
+            };
         }
 
         private void UpdateInventoryEnabled()
