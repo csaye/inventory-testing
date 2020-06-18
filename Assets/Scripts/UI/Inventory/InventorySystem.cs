@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 namespace Spellsplit
@@ -53,7 +55,7 @@ namespace Spellsplit
             {
                 if (inventory[i].itemID != null)
                 {
-                    inventorySlots[i].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = GetIcon(inventory[i].itemID);
+                    GetIcon(inventory[i].itemID);
                 }
                 if (inventory[i].itemCount > 1)
                 {
@@ -62,9 +64,28 @@ namespace Spellsplit
             }
         }
 
-        private Sprite GetIcon(string itemID)
+        private void GetIcon(string itemID)
         {
-            return Resources.Load<Sprite>("Items/" + itemID);
+            // return Resources.Load<Sprite>("Items/" + itemID);
+            // return Addressables.LoadAssetAsync<Sprite>(itemID);
+
+            // AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(itemID);
+
+            // if (handle.Status == AsyncOperationStatus.Succeeded)
+            // {
+            //     return handle.Result;
+            // }
+
+            // handle.Completed += OnLoadDone;
+
+            Addressables.LoadAssetAsync<Sprite>(itemID).Completed += OnLoadDone;
+
+            // return Addressables.LoadAssetAsync<Sprite>(itemID).Result;
+        }
+        
+        private void OnLoadDone(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<Sprite> handle)
+        {
+            inventorySlots[0].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = handle.Result;
         }
 
         private void UpdateInventoryEnabled()

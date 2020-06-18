@@ -713,6 +713,30 @@
       <Project>{bfcad0d1-acd2-b3ee-4c48-90d51bc1bac3}</Project>
       <Name>UnityEditor.UI</Name>
     </ProjectReference>
+    <ProjectReference Include="UnityEditor.CacheServer.csproj">
+      <Project>{2c4d4b7c-4087-b49c-b7ad-6cb922b6bd30}</Project>
+      <Name>UnityEditor.CacheServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.ScriptableBuildPipeline.Editor.csproj">
+      <Project>{1091ed7a-2957-cb48-829a-fae0c95baaa7}</Project>
+      <Name>Unity.ScriptableBuildPipeline.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.ResourceManager.csproj">
+      <Project>{68ff7042-9b02-5ef6-6758-736589e04d5e}</Project>
+      <Name>Unity.ResourceManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Addressables.Editor.csproj">
+      <Project>{755bb7bb-7ef3-e391-c2b5-92d3b7827512}</Project>
+      <Name>Unity.Addressables.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Addressables.csproj">
+      <Project>{ab84ef5c-e54a-b65d-a3e4-72a881ab97f1}</Project>
+      <Name>Unity.Addressables</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.ScriptableBuildPipeline.csproj">
+      <Project>{d7200e56-dd74-947f-1456-9e807d0e9420}</Project>
+      <Name>Unity.ScriptableBuildPipeline</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
