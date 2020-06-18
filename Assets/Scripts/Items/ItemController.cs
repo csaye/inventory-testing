@@ -2,46 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemController : MonoBehaviour
+namespace Spellsplit
 {
-    [Header("References")]
-    public ItemScriptable itemScriptable;
-    
-    private InventorySystem inventorySystem;
-
-    void Awake()
+    public class ItemController : MonoBehaviour
     {
-        if (inventorySystem == null)
-        {
-            inventorySystem = FindObjectOfType<InventorySystem>();
-        }
-    }
-    
-    void OnTriggerEnter2D(Collider2D collider)
-    {
-        if (collider.gameObject.CompareTag("Player"))
-        {
-            List<InventorySlotType> inventory = InventorySystem.inventory;
+        [Header("References")]
+        public ItemScriptable itemScriptable;
+        
+        private InventorySystem inventorySystem;
 
-            for (int i = 0; i < inventory.Count; i++)
+        void Awake()
+        {
+            if (inventorySystem == null)
             {
-                // If available slot in inventory
-                if (inventory[i].itemCount == 0)
+                inventorySystem = FindObjectOfType<InventorySystem>();
+            }
+        }
+        
+        void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (collider.gameObject.CompareTag("Player"))
+            {
+                List<InventorySlotType> inventory = InventorySystem.inventory;
+
+                for (int i = 0; i < inventory.Count; i++)
                 {
-                    inventory[i].itemID = itemScriptable.itemID;
-                    inventory[i].itemCount++;
-                    InventorySystem.inventory = inventory;
-                    inventorySystem.UpdateInventory();
-                    Destroy(gameObject);
-                    break;
-                }
-                else if (inventory[i].itemID == itemScriptable.itemID && inventory[i].itemCount < itemScriptable.maxStack)
-                {
-                    inventory[i].itemCount++;
-                    InventorySystem.inventory = inventory;
-                    inventorySystem.UpdateInventory();
-                    Destroy(gameObject);
-                    break;
+                    // If available slot in inventory
+                    if (inventory[i].itemCount == 0)
+                    {
+                        inventory[i].itemID = itemScriptable.itemID;
+                        inventory[i].itemCount++;
+                        InventorySystem.inventory = inventory;
+                        inventorySystem.UpdateInventory();
+                        Destroy(gameObject);
+                        break;
+                    }
+                    else if (inventory[i].itemID == itemScriptable.itemID && inventory[i].itemCount < itemScriptable.maxStack)
+                    {
+                        inventory[i].itemCount++;
+                        InventorySystem.inventory = inventory;
+                        inventorySystem.UpdateInventory();
+                        Destroy(gameObject);
+                        break;
+                    }
                 }
             }
         }
