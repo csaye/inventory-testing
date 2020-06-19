@@ -3100,13 +3100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a0573a89e4945b78c04208a7b05b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customInventory:
-  - itemID: item_flower
-    itemCount: 7
-  - itemID: item_flower
-    itemCount: 79
-  - itemID: item_flower
-    itemCount: 341
   inventorySlots:
   - {fileID: 1678246288}
   - {fileID: 1600565495}
@@ -3119,6 +3112,7 @@ MonoBehaviour:
   - {fileID: 1408924625}
   - {fileID: 678097527}
   inventoryPopup: {fileID: 1998440499}
+  placeholder: {fileID: 21300000, guid: eb2902ec0cb2e45d5b4ffbebd0ff02c2, type: 3}
   slotPrefab: {fileID: 2068848586209537252, guid: 3795bee0898c04fc69635ab5150ffdcf,
     type: 3}
   itemsParent: {fileID: 295234165}

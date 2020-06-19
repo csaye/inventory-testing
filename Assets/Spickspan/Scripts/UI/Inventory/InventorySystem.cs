@@ -1,29 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// using UnityEngine.AddressableAssets;
-// using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 namespace Spellsplit
 {
     public class InventorySystem : MonoBehaviour
     {   
-        public static List<InventorySlotType> inventory = new List<InventorySlotType>
+        public List<int> itemCount = new List<int>
         {
-            new InventorySlotType(null, 0),
-            new InventorySlotType(null, 0),
-            new InventorySlotType(null, 0),
-            new InventorySlotType(null, 0),
-            new InventorySlotType(null, 0),
-            new InventorySlotType(null, 0),
-            new InventorySlotType(null, 0),
-            new InventorySlotType(null, 0),
-            new InventorySlotType(null, 0),
-            new InventorySlotType(null, 0)
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
         };
 
-        public static List<ItemScriptable> itemData = new List<ItemScriptable>()
+        public List<ItemScriptable> itemData = new List<ItemScriptable>()
         {
             null,
             null,
@@ -40,9 +38,9 @@ namespace Spellsplit
         public static InventorySystem instance;
 
         [Header("References")]
-        public List<InventorySlotType> customInventory = new List<InventorySlotType>();
         public List<GameObject> inventorySlots;
         public CanvasGroup inventoryPopup;
+        public Sprite placeholder;
         public GameObject slotPrefab;
         public Transform itemsParent;
 
@@ -52,18 +50,13 @@ namespace Spellsplit
 
         void Start()
         {
-            for (int i = 0; i < customInventory.Count; i++)
-            {
-                inventory[i] = customInventory[i];
-            }
-            
-            UpdateInventoryEnabled();
-            UpdateInventory();
-
             if (instance == null)
             {
                 instance = this;
             }
+
+            UpdateInventoryEnabled();
+            UpdateInventory();
         }
 
         void Update()
@@ -92,68 +85,65 @@ namespace Spellsplit
             for (int i = 0; i < 10; i++)
             {
                 GameObject slot = Instantiate(slotPrefab, itemsParent);
+                inventorySlots.Add(slot);
                 
                 itemData.Add(null);
-                inventory.Add(new InventorySlotType(null, 0));
-                inventorySlots.Add(slot);
+                inventory.Add(new InventorySlotType(0, 0));
             }
         }
 
-        // Set item data and visual data according to inventory slot type data
-        public void UpdateInventory()
+        // Attempt to add the item to the inventory
+        public bool AddItem(ItemScriptable item)
         {
-            for (int i = 0; i < inventorySlots.Count; i++)
+            for (int i = 0; i < itemData.Count; i++)
             {
-                // if (inventory[i].itemID != null && (i > itemData.Count || itemData[i] == null))
-                if (inventory[i].itemID != null)
+                // If slot is empty
+                if (itemData[i] == null)
                 {
-                    if (itemData[i] == null)
-                    {
-                        itemData[i] = findData(inventory[i].itemID);
-                    }
-
-                    inventorySlots[i].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = itemData[i].itemIcon;
+                    itemData[i] = item;
+                    inventory[i] = 1;
+                    return true;
                 }
 
-                if (inventory[i].itemCount > 1)
+                // If stacking to slot
+                if (itemData[i].itemID == item.itemID && inventory[i].itemCount < item.maxStack)
                 {
-                    inventorySlots[i].transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = inventory[i].itemCount.ToString();
+                    inventory[i].itemCount++;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // Update inventory based on item data and inventory data
+        public void UpdateInventory()
+        {
+            for (int i = 0; i < itemData.Count; i++)
+            {
+                Transform slotTransform = inventorySlots[i].transform.GetChild(0).transform;
+
+                // Set slot icon
+                if (inventory[i].itemID != 0)
+                {
+                    slotTransform.GetChild(0).GetComponent<Image>().sprite = itemData[i].itemIcon;
                 }
                 else
                 {
-                    inventorySlots[i].transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "";
+                    slotTransform.GetChild(0).GetComponent<Image>().sprite = placeholder;
+                }
+
+                // Set slot number
+                if (inventory[i].itemCount > 1)
+                {
+                    slotTransform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = inventory[i].itemCount.ToString();
+                }
+                else
+                {
+                    slotTransform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "";
                 }
             }
         }
-
-        // Find item scriptable corresponding to item ID
-        private ItemScriptable findData(string itemID)
-        {
-            try
-            {
-                return Resources.Load<ItemScriptable>("Scriptables/Items/" + itemID);
-            }
-            catch
-            {
-                Debug.LogError("Item data for: " + itemID + " could not be found.");
-                return null;
-            }
-        }
-
-        // private Sprite GetIcon(string itemID)
-        // {
-        //     return Resources.Load<Sprite>("Item Icons/" + itemID);
-        // }
-
-        // private void SetIcon(string itemID, int index)
-        // {
-        //     AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(itemID);
-
-        //     handle.Completed += ctx =>
-        //     {
-        //         inventorySlots[index].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = handle.Result;
-        //     };
-        // }
 
         private void UpdateInventoryEnabled()
         {

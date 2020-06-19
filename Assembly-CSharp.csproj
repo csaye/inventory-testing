@@ -45,7 +45,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Spickspan\Scriptables\ItemScriptable.cs" />
+     <Compile Include="Assets\Spickspan\Scriptables\Items\ItemScriptable.cs" />
      <Compile Include="Assets\Spickspan\Scripts\Items\ItemController.cs" />
      <Compile Include="Assets\Spickspan\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Spickspan\Scripts\UI\Inventory\HeldItem.cs" />
