@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Flower
   m_EditorClassIdentifier: 
   itemID: item_flower
-  maxStack: 999
+  maxStack: 1

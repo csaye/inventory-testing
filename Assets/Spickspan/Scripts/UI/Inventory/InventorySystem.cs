@@ -24,11 +24,15 @@ namespace Spellsplit
         };
 
         [Header("References")]
-        public CanvasGroup inventoryPopup;
         public List<InventorySlotType> customInventory = new List<InventorySlotType>();
         public List<GameObject> inventorySlots;
+        public CanvasGroup inventoryPopup;
+        public GameObject slotPrefab;
+        public Transform itemsParent;
 
         private bool inventoryEnabled = false;
+        
+        private float slotCount;
 
         void Start()
         {
@@ -46,6 +50,29 @@ namespace Spellsplit
             {
                 inventoryEnabled = !inventoryEnabled;
                 UpdateInventoryEnabled();
+            }
+
+            if (Input.GetKeyDown("u"))
+            {
+                Unlock();
+            }
+        }
+
+        private void Unlock()
+        {
+            if (slotCount == 40)
+            {
+                return;
+            }
+
+            slotCount += 10;
+
+            for (int i = 0; i < 10; i++)
+            {
+                GameObject slot = Instantiate(slotPrefab, itemsParent);
+                
+                inventory.Add(new InventorySlotType(null, 0));
+                inventorySlots.Add(slot);
             }
         }
 
