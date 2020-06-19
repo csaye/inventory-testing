@@ -7,36 +7,6 @@ namespace Spellsplit
 {
     public class InventorySystem : MonoBehaviour
     {
-        public List<InventorySlot> inventory = new List<InventorySlot>();
-
-        // public List<ItemScriptable> itemData = new List<ItemScriptable>()
-        // {
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null
-        // };
-
-        // public List<int> itemCount = new List<int>
-        // {
-        //     0,
-        //     0,
-        //     0,
-        //     0,
-        //     0,
-        //     0,
-        //     0,
-        //     0,
-        //     0,
-        //     0
-        // };
-
         public static InventorySystem instance;
 
         [Header("References")]
@@ -46,8 +16,11 @@ namespace Spellsplit
         public GameObject slotPrefab;
         public Transform itemsParent;
 
+        [Header("Public Variables")]
+        public List<InventorySlot> inventory = new List<InventorySlot>();
+
         private bool inventoryEnabled = false;
-        
+                
         private float slotCount = 10;
 
         void Start()

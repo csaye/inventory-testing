@@ -18,29 +18,6 @@ namespace Spellsplit
                     InventorySystem.instance.UpdateInventory();
                     Destroy(gameObject);
                 }
-                // List<InventorySlotType> inventory = InventorySystem.inventory;
-
-                // for (int i = 0; i < inventory.Count; i++)
-                // {
-                //     // If available slot in inventory
-                //     if (inventory[i].itemCount == 0)
-                //     {
-                //         inventory[i].itemID = itemScriptable.itemID;
-                //         inventory[i].itemCount++;
-                //         InventorySystem.inventory = inventory;
-                //         InventorySystem.instance.UpdateInventory();
-                //         Destroy(gameObject);
-                //         break;
-                //     }
-                //     else if (inventory[i].itemID == itemScriptable.itemID && inventory[i].itemCount < itemScriptable.maxStack)
-                //     {
-                //         inventory[i].itemCount++;
-                //         InventorySystem.inventory = inventory;
-                //         InventorySystem.instance.UpdateInventory();
-                //         Destroy(gameObject);
-                //         break;
-                //     }
-                // }
             }
         }
     }
