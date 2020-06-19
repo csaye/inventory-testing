@@ -23,6 +23,10 @@ namespace Spellsplit
             new InventorySlotType(null, 0)
         };
 
+        public static List<ItemScriptable> itemData = new List<ItemScriptable>();
+
+        public static InventorySystem instance;
+
         [Header("References")]
         public List<InventorySlotType> customInventory = new List<InventorySlotType>();
         public List<GameObject> inventorySlots;
@@ -40,8 +44,14 @@ namespace Spellsplit
             {
                 inventory[i] = customInventory[i];
             }
+            
             UpdateInventoryEnabled();
             UpdateInventory();
+
+            if (instance == null)
+            {
+                instance = this;
+            }
         }
 
         void Update()
@@ -76,10 +86,17 @@ namespace Spellsplit
             }
         }
 
+        // Set item data and visual data according to inventory slot type data
         public void UpdateInventory()
         {
             for (int i = 0; i < inventorySlots.Count; i++)
             {
+
+                if (inventory[i].itemID != null && (i > itemData.Count || itemData[i] == null))
+                {
+                    itemData[i] = findData(inventory[i].itemID);
+                }
+
                 if (inventory[i].itemID != null)
                 {
                     // SetIcon(inventory[i].itemID, i);
@@ -92,10 +109,24 @@ namespace Spellsplit
             }
         }
 
-        private Sprite GetIcon(string itemID)
+        // Find item scriptable corresponding to item ID
+        private ItemScriptable findData(string itemID)
         {
-            return Resources.Load<Sprite>("Item Icons/" + itemID);
+            try
+            {
+                return Resources.Load<ItemScriptable>("Scriptables/Items/" + itemID);
+            }
+            catch
+            {
+                Debug.LogError("Item data for: " + itemID + " could not be found.");
+                return null;
+            }
         }
+
+        // private Sprite GetIcon(string itemID)
+        // {
+        //     return Resources.Load<Sprite>("Item Icons/" + itemID);
+        // }
 
         // private void SetIcon(string itemID, int index)
         // {

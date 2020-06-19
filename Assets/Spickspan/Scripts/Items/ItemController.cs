@@ -9,15 +9,15 @@ namespace Spellsplit
         [Header("References")]
         public ItemScriptable itemScriptable;
         
-        private InventorySystem inventorySystem;
+        // private InventorySystem inventorySystem;
 
-        void Awake()
-        {
-            if (inventorySystem == null)
-            {
-                inventorySystem = FindObjectOfType<InventorySystem>();
-            }
-        }
+        // void Awake()
+        // {
+        //     if (inventorySystem == null)
+        //     {
+        //         inventorySystem = FindObjectOfType<InventorySystem>();
+        //     }
+        // }
         
         void OnTriggerEnter2D(Collider2D collider)
         {
@@ -33,7 +33,7 @@ namespace Spellsplit
                         inventory[i].itemID = itemScriptable.itemID;
                         inventory[i].itemCount++;
                         InventorySystem.inventory = inventory;
-                        inventorySystem.UpdateInventory();
+                        InventorySystem.instance.UpdateInventory();
                         Destroy(gameObject);
                         break;
                     }
@@ -41,7 +41,7 @@ namespace Spellsplit
                     {
                         inventory[i].itemCount++;
                         InventorySystem.inventory = inventory;
-                        inventorySystem.UpdateInventory();
+                        InventorySystem.instance.UpdateInventory();
                         Destroy(gameObject);
                         break;
                     }
