@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 164538575fa534e308ed58fb4d520ace, type: 3}
-  m_Name: Flower
+  m_Name: item_flower
   m_EditorClassIdentifier: 
   itemID: item_flower
-  maxStack: 1
+  itemIcon: {fileID: 21300000, guid: 565594dfcf776483885a7ce3c3c4f872, type: 3}
+  maxStack: 999
+  holdable: 1

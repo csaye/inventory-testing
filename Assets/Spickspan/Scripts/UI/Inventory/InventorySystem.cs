@@ -23,7 +23,19 @@ namespace Spellsplit
             new InventorySlotType(null, 0)
         };
 
-        public static List<ItemScriptable> itemData = new List<ItemScriptable>();
+        public static List<ItemScriptable> itemData = new List<ItemScriptable>()
+        {
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        };
 
         public static InventorySystem instance;
 
@@ -81,6 +93,7 @@ namespace Spellsplit
             {
                 GameObject slot = Instantiate(slotPrefab, itemsParent);
                 
+                itemData.Add(null);
                 inventory.Add(new InventorySlotType(null, 0));
                 inventorySlots.Add(slot);
             }
@@ -91,20 +104,24 @@ namespace Spellsplit
         {
             for (int i = 0; i < inventorySlots.Count; i++)
             {
-
-                if (inventory[i].itemID != null && (i > itemData.Count || itemData[i] == null))
-                {
-                    itemData[i] = findData(inventory[i].itemID);
-                }
-
+                // if (inventory[i].itemID != null && (i > itemData.Count || itemData[i] == null))
                 if (inventory[i].itemID != null)
                 {
-                    // SetIcon(inventory[i].itemID, i);
-                    inventorySlots[i].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = GetIcon(inventory[i].itemID);
+                    if (itemData[i] == null)
+                    {
+                        itemData[i] = findData(inventory[i].itemID);
+                    }
+
+                    inventorySlots[i].transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = itemData[i].itemIcon;
                 }
+
                 if (inventory[i].itemCount > 1)
                 {
                     inventorySlots[i].transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = inventory[i].itemCount.ToString();
+                }
+                else
+                {
+                    inventorySlots[i].transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "";
                 }
             }
         }

@@ -17,6 +17,20 @@ public class HeldItem : MonoBehaviour
 
     private void Update()
     {
-        spriteRenderer.sprite = itemsParent.GetChild(HotbarHighlight.currentSlot).GetChild(0).GetChild(0).GetComponent<Image>().sprite;
+        try
+        {
+            if (Spellsplit.InventorySystem.itemData[HotbarHighlight.currentSlot].holdable)
+            {
+                spriteRenderer.sprite = itemsParent.GetChild(HotbarHighlight.currentSlot).GetChild(0).GetChild(0).GetComponent<Image>().sprite;
+            }
+            else
+            {
+                spriteRenderer.sprite = null;
+            }
+        }
+        catch
+        {
+            spriteRenderer.sprite = null;
+        }
     }
 }
