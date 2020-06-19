@@ -32,7 +32,7 @@ namespace Spellsplit
 
         private bool inventoryEnabled = false;
         
-        private float slotCount;
+        private float slotCount = 10;
 
         void Start()
         {
@@ -60,7 +60,7 @@ namespace Spellsplit
 
         private void Unlock()
         {
-            if (slotCount == 40)
+            if (slotCount >= 40)
             {
                 return;
             }

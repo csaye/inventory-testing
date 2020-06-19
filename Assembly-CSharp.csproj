@@ -45,6 +45,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\HotbarHighlight.cs" />
      <Compile Include="Assets\Spickspan\Prefabs\UI\Inventory\InventorySlotType.cs" />
      <Compile Include="Assets\Spickspan\Scriptables\Items\ItemScriptable.cs" />
      <Compile Include="Assets\Spickspan\Scripts\Items\ItemController.cs" />
