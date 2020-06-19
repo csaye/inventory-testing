@@ -19,7 +19,7 @@ public class HeldItem : MonoBehaviour
     {
         try
         {
-            if (Spellsplit.InventorySystem.instance.itemData[HotbarHighlight.currentSlot].holdable)
+            if (Spellsplit.InventorySystem.instance.inventory[HotbarHighlight.currentSlot].itemData.holdable)
             {
                 spriteRenderer.sprite = itemsParent.GetChild(HotbarHighlight.currentSlot).GetChild(0).GetChild(0).GetComponent<Image>().sprite;
             }

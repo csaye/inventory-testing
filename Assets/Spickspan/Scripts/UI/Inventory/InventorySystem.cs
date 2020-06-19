@@ -6,34 +6,36 @@ using UnityEngine.UI;
 namespace Spellsplit
 {
     public class InventorySystem : MonoBehaviour
-    {   
-        public List<int> itemCount = new List<int>
-        {
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-        };
+    {
+        public List<InventorySlot> inventory = new List<InventorySlot>();
 
-        public List<ItemScriptable> itemData = new List<ItemScriptable>()
-        {
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        };
+        // public List<ItemScriptable> itemData = new List<ItemScriptable>()
+        // {
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null,
+        //     null
+        // };
+
+        // public List<int> itemCount = new List<int>
+        // {
+        //     0,
+        //     0,
+        //     0,
+        //     0,
+        //     0,
+        //     0,
+        //     0,
+        //     0,
+        //     0,
+        //     0
+        // };
 
         public static InventorySystem instance;
 
@@ -53,6 +55,12 @@ namespace Spellsplit
             if (instance == null)
             {
                 instance = this;
+            }
+
+            // Begin with ten empty inventory slots in hotbar
+            for (int i = 0; i < 10; i++)
+            {
+                inventory.Add(new InventorySlot(null, 0));
             }
 
             UpdateInventoryEnabled();
@@ -87,26 +95,24 @@ namespace Spellsplit
                 GameObject slot = Instantiate(slotPrefab, itemsParent);
                 inventorySlots.Add(slot);
                 
-                itemData.Add(null);
-                inventory.Add(new InventorySlotType(0, 0));
+                inventory.Add(new InventorySlot(null, 0));
             }
         }
 
         // Attempt to add the item to the inventory
         public bool AddItem(ItemScriptable item)
         {
-            for (int i = 0; i < itemData.Count; i++)
+            for (int i = 0; i < inventory.Count; i++)
             {
                 // If slot is empty
-                if (itemData[i] == null)
+                if (inventory[i].itemCount == 0)
                 {
-                    itemData[i] = item;
-                    inventory[i] = 1;
+                    inventory[i] = new InventorySlot(item, 1);
                     return true;
                 }
 
                 // If stacking to slot
-                if (itemData[i].itemID == item.itemID && inventory[i].itemCount < item.maxStack)
+                if (inventory[i].itemData.itemID == item.itemID && inventory[i].itemCount < item.maxStack)
                 {
                     inventory[i].itemCount++;
                     return true;
@@ -119,14 +125,14 @@ namespace Spellsplit
         // Update inventory based on item data and inventory data
         public void UpdateInventory()
         {
-            for (int i = 0; i < itemData.Count; i++)
+            for (int i = 0; i < inventory.Count; i++)
             {
                 Transform slotTransform = inventorySlots[i].transform.GetChild(0).transform;
 
                 // Set slot icon
-                if (inventory[i].itemID != 0)
+                if (inventory[i].itemCount != 0)
                 {
-                    slotTransform.GetChild(0).GetComponent<Image>().sprite = itemData[i].itemIcon;
+                    slotTransform.GetChild(0).GetComponent<Image>().sprite = inventory[i].itemData.itemIcon;
                 }
                 else
                 {
