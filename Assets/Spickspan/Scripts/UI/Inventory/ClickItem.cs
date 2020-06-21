@@ -13,7 +13,15 @@ public class ClickItem : MonoBehaviour
 
     public static int clickedIndex;
 
+    public static int lastClickedIndex = -1;
+
+    [Header("References")]
+    public Sprite placeholder;
+
     private bool slotNulled;
+
+    private Sprite lastClickedIcon;
+    private string lastClickedCount;
 
     private void Update()
     {
@@ -23,8 +31,15 @@ public class ClickItem : MonoBehaviour
             {
                 slotNulled = true;
                 itemClicked = false;
-                transform.GetChild(0).GetComponent<Image>().enabled = true;
-                transform.GetChild(1).GetComponent<TextMeshProUGUI>().enabled = true;
+
+                if (lastClickedIndex == InventorySystem.instance.inventorySlots.IndexOf(transform.parent.gameObject))
+                {
+                    if (lastClickedIcon != null)
+                    {
+                        transform.GetChild(0).GetComponent<Image>().sprite = lastClickedIcon;
+                        transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = lastClickedCount;
+                    }
+                }
             }
         }
         else
@@ -46,8 +61,12 @@ public class ClickItem : MonoBehaviour
                 // Try to take item from current slot and if no item reset to no clicked item state
                 if (InventorySystem.instance.inventory[index].itemCount > 0)
                 {
-                    transform.GetChild(0).GetComponent<Image>().enabled = false;
-                    transform.GetChild(1).GetComponent<TextMeshProUGUI>().enabled = false;
+                    lastClickedIndex = index;
+                    lastClickedIcon = transform.GetChild(0).GetComponent<Image>().sprite;
+                    lastClickedCount = transform.GetChild(1).GetComponent<TextMeshProUGUI>().text;
+                    transform.GetChild(0).GetComponent<Image>().sprite = placeholder;
+                    transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "";
+
                     clickedItem = InventorySystem.instance.inventory[index];
                     clickedIndex = index;
                     ClickedItem.instance.SetItem(clickedItem);
@@ -70,6 +89,7 @@ public class ClickItem : MonoBehaviour
                     InventorySystem.instance.inventory[index] = clickedItem;
                     ClickedItem.instance.SetItem(new InventorySlot(null, 0));
                     InventorySystem.instance.UpdateInventory();
+                    lastClickedIndex = -1;
                 }
                 else if (InventorySystem.instance.inventory[index].itemData.itemID == clickedItem.itemData.itemID)
                 {
@@ -78,6 +98,8 @@ public class ClickItem : MonoBehaviour
                         InventorySystem.instance.inventory[clickedIndex] = new InventorySlot(null, 0);
                         InventorySystem.instance.inventory[index].itemCount += clickedItem.itemCount;
                         ClickedItem.instance.SetItem(new InventorySlot(null, 0));
+                        lastClickedIndex = -1;
+                        InventorySystem.instance.UpdateInventory();
                     }
                     else
                     {
@@ -86,9 +108,13 @@ public class ClickItem : MonoBehaviour
                         InventorySystem.instance.inventory[index].itemCount += leftToFill;
                         ClickedItem.instance.SetItem(new InventorySlot(clickedItem.itemData, clickedItem.itemCount));
                         itemClicked = true;
-                    }
+                        InventorySystem.instance.UpdateInventory();
 
-                    InventorySystem.instance.UpdateInventory();
+                        // Set last clicked index back to hidden
+                        GameObject lastClicked = InventorySystem.instance.inventorySlots[lastClickedIndex];
+                        lastClicked.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = placeholder;
+                        lastClicked.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "";
+                    }
                 }
                 else
                 {
