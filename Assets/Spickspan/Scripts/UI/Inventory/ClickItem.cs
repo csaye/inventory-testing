@@ -32,8 +32,9 @@ public class ClickItem : MonoBehaviour
                 // Try to take item from current slot and if no item reset to no clicked item state
                 if (InventorySystem.instance.inventory[index].itemCount > 0)
                 {
-                    clickedIndex = index;
                     clickedItem = InventorySystem.instance.inventory[index];
+                    clickedIndex = index;
+                    ClickedItem.instance.SetItem(clickedItem);
                 }
                 else
                 {
@@ -51,6 +52,7 @@ public class ClickItem : MonoBehaviour
                 {
                     InventorySystem.instance.inventory[clickedIndex] = new InventorySlot(null, 0);
                     InventorySystem.instance.inventory[index] = clickedItem;
+                    ClickedItem.instance.SetItem(new InventorySlot(null, 0));
                     InventorySystem.instance.UpdateInventory();
                 }
                 else if (InventorySystem.instance.inventory[index].itemData.itemID == clickedItem.itemData.itemID
@@ -58,6 +60,7 @@ public class ClickItem : MonoBehaviour
                 {
                     InventorySystem.instance.inventory[clickedIndex] = new InventorySlot(null, 0);
                     InventorySystem.instance.inventory[index].itemCount += clickedItem.itemCount;
+                    ClickedItem.instance.SetItem(new InventorySlot(null, 0));
                     InventorySystem.instance.UpdateInventory();
                 }
                 else

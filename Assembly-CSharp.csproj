@@ -49,6 +49,7 @@
      <Compile Include="Assets\Spickspan\Scripts\Items\ItemController.cs" />
      <Compile Include="Assets\Spickspan\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Spickspan\Scripts\UI\Inventory\ClickItem.cs" />
+     <Compile Include="Assets\Spickspan\Scripts\UI\Inventory\ClickedItem.cs" />
      <Compile Include="Assets\Spickspan\Scripts\UI\Inventory\HeldItem.cs" />
      <Compile Include="Assets\Spickspan\Scripts\UI\Inventory\HotbarHighlight.cs" />
      <Compile Include="Assets\Spickspan\Scripts\UI\Inventory\InventorySlot.cs" />
