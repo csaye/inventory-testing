@@ -9,6 +9,8 @@ namespace Spellsplit
     {
         public static InventorySystem instance;
 
+        public static bool inventoryEnabled = false;
+
         [Header("References")]
         public List<GameObject> inventorySlots;
         public CanvasGroup inventoryPopup;
@@ -18,8 +20,6 @@ namespace Spellsplit
 
         [Header("Public Variables")]
         public List<InventorySlot> inventory = new List<InventorySlot>();
-
-        private bool inventoryEnabled = false;
                 
         private float slotCount = 10;
 
