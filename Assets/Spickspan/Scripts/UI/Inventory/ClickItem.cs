@@ -1,7 +1,9 @@
 ﻿using Spellsplit;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClickItem : MonoBehaviour
 {
@@ -11,11 +13,23 @@ public class ClickItem : MonoBehaviour
 
     public static int clickedIndex;
 
+    private bool slotNulled;
+
     private void Update()
     {
         if (!InventorySystem.inventoryEnabled)
         {
-            itemClicked = false;
+            if (!slotNulled)
+            {
+                slotNulled = true;
+                itemClicked = false;
+                transform.GetChild(0).GetComponent<Image>().enabled = true;
+                transform.GetChild(1).GetComponent<TextMeshProUGUI>().enabled = true;
+            }
+        }
+        else
+        {
+            slotNulled = false;
         }
     }
 
@@ -32,6 +46,8 @@ public class ClickItem : MonoBehaviour
                 // Try to take item from current slot and if no item reset to no clicked item state
                 if (InventorySystem.instance.inventory[index].itemCount > 0)
                 {
+                    transform.GetChild(0).GetComponent<Image>().enabled = false;
+                    transform.GetChild(1).GetComponent<TextMeshProUGUI>().enabled = false;
                     clickedItem = InventorySystem.instance.inventory[index];
                     clickedIndex = index;
                     ClickedItem.instance.SetItem(clickedItem);
