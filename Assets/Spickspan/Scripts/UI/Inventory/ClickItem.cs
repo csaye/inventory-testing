@@ -71,12 +71,23 @@ public class ClickItem : MonoBehaviour
                     ClickedItem.instance.SetItem(new InventorySlot(null, 0));
                     InventorySystem.instance.UpdateInventory();
                 }
-                else if (InventorySystem.instance.inventory[index].itemData.itemID == clickedItem.itemData.itemID
-                && InventorySystem.instance.inventory[index].itemCount + clickedItem.itemCount <= clickedItem.itemData.maxStack)
+                else if (InventorySystem.instance.inventory[index].itemData.itemID == clickedItem.itemData.itemID)
                 {
-                    InventorySystem.instance.inventory[clickedIndex] = new InventorySlot(null, 0);
-                    InventorySystem.instance.inventory[index].itemCount += clickedItem.itemCount;
-                    ClickedItem.instance.SetItem(new InventorySlot(null, 0));
+                    if (InventorySystem.instance.inventory[index].itemCount + clickedItem.itemCount <= clickedItem.itemData.maxStack) 
+                    {
+                        InventorySystem.instance.inventory[clickedIndex] = new InventorySlot(null, 0);
+                        InventorySystem.instance.inventory[index].itemCount += clickedItem.itemCount;
+                        ClickedItem.instance.SetItem(new InventorySlot(null, 0));
+                    }
+                    else
+                    {
+                        int leftToFill = clickedItem.itemData.maxStack - InventorySystem.instance.inventory[index].itemCount;
+                        InventorySystem.instance.inventory[clickedIndex].itemCount -= leftToFill;
+                        InventorySystem.instance.inventory[index].itemCount += leftToFill;
+                        ClickedItem.instance.SetItem(new InventorySlot(clickedItem.itemData, clickedItem.itemCount));
+                        itemClicked = true;
+                    }
+
                     InventorySystem.instance.UpdateInventory();
                 }
                 else
